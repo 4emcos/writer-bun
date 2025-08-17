@@ -15,22 +15,18 @@ interface ProcessedPayment extends DefaultPayment {
 }
 
 export class MemoryDatabase {
-    private readonly data = new Map<string, ProcessedPayment[]>()
+    private readonly data: ProcessedPayment[] = []
     private readonly mutex = new Mutex()
 
     async storePayment(payment: ProcessedPayment): Promise<void> {
         return this.mutex.runExclusive(async () => {
-            const key = payment.correlationId
-            if (!this.data.has(key)) {
-                this.data.set(key, [])
-            }
-            this.data.get(key)?.push(payment)
+            this.data.push(payment)
         })
     }
 
-    async getAllPayments(): Promise<MapIterator<ProcessedPayment[]>> {
+    async getAllPayments(): Promise<ProcessedPayment[]> {
         return this.mutex.runExclusive(async () => {
-            return this.data.values()
+            return this.data
         })
     }
 }

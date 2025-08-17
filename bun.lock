@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "writter",
+      "name": "writer",
       "dependencies": {
         "@types/bun": "^1.2.19",
         "@typescript/native-preview": "7.0.0-dev.20250805.1",
